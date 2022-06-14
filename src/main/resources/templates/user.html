@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+
+    <div>firstName: <span th:text="${user.firstName}"></span></div>
+    <div>lastName: <span th:text="${user.lastName}"></span></div>
+    <div>email: <span th:text="${user.email}"></span></div>
+
+<div th:insert="~{footer :: copy}"></div>
+</body>
+</html>
+
+<!--
+</body>
+</html>-->
