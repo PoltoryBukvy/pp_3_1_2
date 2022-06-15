@@ -22,7 +22,7 @@ public class User implements UserDetails {
    @Column(name = "last_name")
    private String lastName;
 
-   @Column(name = "email")
+   @Column(name = "email", unique = true)
    private String email;
 
    public void setPassword(String password) {
@@ -36,7 +36,7 @@ public class User implements UserDetails {
    @Column(name = "password")
    private String password;
 
-   @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
+   @ManyToMany(fetch = FetchType.EAGER)
    @JoinTable(
            name="user_role",
            joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
@@ -118,6 +118,8 @@ public class User implements UserDetails {
       return true;
    }
 
-
-
+   @Override
+   public String toString() {
+      return this.email;
+   }
 }

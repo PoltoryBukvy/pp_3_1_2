@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface UserService {
     public User save(User user);
 
-    public Optional<User> find(long id);
+    public User find(long id);
 
     public List<User> getAll();
 
     public void delete(User user);
 
-    public Optional<User> findByEmail(String email);
+    public User getByEmail(String email);
 }

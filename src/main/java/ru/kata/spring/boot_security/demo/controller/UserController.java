@@ -41,11 +41,11 @@ public class UserController {
 
 	@GetMapping(value = "/user/{id}")
 	public String show(@PathVariable(value = "id") long id, Model model) {
-		Optional<User> user = userService.find(id);
-		if (user.isEmpty()) {
+		User user = userService.find(id);
+		if (user == null) {
 			return "404";
 		}
-		model.addAttribute("user", user.get());
+		model.addAttribute("user", user);
 		return "form";
 	}
 
@@ -55,13 +55,13 @@ public class UserController {
 		return "form";
 	}
 
-	@GetMapping(value = "/user/{id}/delete")
+	@DeleteMapping(value = "/user/{id}/delete")
 	public String delete(@PathVariable(value = "id") long id, Model model) {
-		Optional<User> user = userService.find(id);
-		if (user.isEmpty()) {
+		User user = userService.find(id);
+		if (user == null) {
 			return "404";
 		}
-		userService.delete(user.get());
+		userService.delete(user);
 		return list(model);
 	}
 }
