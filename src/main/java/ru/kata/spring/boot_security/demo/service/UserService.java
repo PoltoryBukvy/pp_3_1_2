@@ -10,7 +10,7 @@ public interface UserService {
 
     public User find(long id);
 
-    public List<User> getAll();
+    public List<User> getAllUsers();
 
     public void delete(User user);
 

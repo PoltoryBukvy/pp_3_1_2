@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,14 +21,14 @@ import ru.kata.spring.boot_security.demo.model.User;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private final UserDao userDao;
     private final SuccessUserHandler successUserHandler;
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDao userDao) {
-        this.successUserHandler = successUserHandler;
-        this.userDao = userDao;
+    final UserDetailsService userDetailsService;
 
+    public WebSecurityConfig(SuccessUserHandler successUserHandler,
+                             @Qualifier("userDetailsService") UserDetailsService userDetailsService) {
+        this.successUserHandler = successUserHandler;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -59,22 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return daoAuthenticationProvider;
-    }
-
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                System.out.println("username: " + username);
-                User user = userDao.getByEmail(username);
-                System.out.println("user: " + user);
-                return user;
-            }
-        };
     }
 
 }
