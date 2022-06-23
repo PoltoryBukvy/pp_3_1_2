@@ -10,7 +10,7 @@ public interface UserDao {
 
         public User getById(long id);
 
-        public List<User> getAll();
+        public List<User> getAllUsers();
 
         public User update(User user);
 

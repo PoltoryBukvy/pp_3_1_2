@@ -1,19 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1 th:text="${user.id == null ? 'Create' : 'Edit'}"> </h1>
-<form action="#" th:action="${user.id == null ? '/user' : '/user/' + user.id}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <p>FirstName: <input type="text" th:field="*{firstName}" /></p>
-    <p>LastName: <input type="text" th:field="*{lastName}" /></p>
-    <p>Email: <input type="text" th:field="*{email}" /></p>
-    <p>Password: <input type="text" th:field="*{password}" /></p>
-    <p><input type="submit" value="save" /></p>
-</form>
-<div th:insert="~{footer :: copy}"></div>
+<div th:fragment="form_user">
+    <form th:id="${'user-form-'+user.id}" th:action="${user.id == null ? '/admin/user' : '/admin/user/' + user.id}" method="post"  class="center-block"
+          th:object="${user}">
+
+        <div class="mx-auto text-center" style="width: 400px;">
+
+            <div th:if="${user.id != null}">
+                <label class="label_input" for="inputID">ID</label>
+                <input type="text" placeholder="ID" th:field="*{id}" class="form-control" id="inputID" readonly>
+            </div>
+
+        <label class="label_input" for="inputFirstName">First name</label>
+        <input type="text" placeholder="First name" th:field="*{firstName}" class="form-control" id="inputFirstName" th:readonly="${readonly}">
+
+        <label class="label_input" for="inputLastName">Last name</label>
+        <input type="text" placeholder="Last name" th:field="*{lastName}" class="form-control" id="inputLastName" th:readonly="${readonly}">
+
+        <label class="label_input" for="inputAge">Age</label>
+        <input type="number" placeholder="Age" th:field="*{age}" class="form-control" id="InputAge" th:readonly="${readonly}">
+
+        <label class="label_input" for="inputEmail">Email</label>
+        <input type="email" placeholder="Email" th:field="*{email}" class="form-control" id="inputEmail" th:readonly="${readonly}">
+
+        <label class="label_input" for="inputPassword">Password</label>
+        <input type="password" placeholder="Password" th:field="*{password}" class="form-control" id="inputPassword" th:readonly="${readonly}">
+
+        <label class="label_input">Role</label>
+        <select name="roless" class="custom-select" multiple size="2">
+            <option th:disabled="${readonly}"
+                    th:each="role : ${allRoles}"
+                    th:value="${{role.id}}"
+                    th:text="${role.name}">
+            </option>
+        </select>
+
+        <button th:if="${user.id == null}" type="submit" class="btn btn-success add_new_user">Add new user</button>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

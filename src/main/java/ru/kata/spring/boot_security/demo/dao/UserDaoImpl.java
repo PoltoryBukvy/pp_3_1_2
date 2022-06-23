@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
-    public User save (User user) {
+    public User save(User user) {
         em.persist(user);
         return user;
     }
@@ -31,30 +31,21 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAll() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> cq = cb.createQuery(User.class);
-        Root<User> rootEntry = cq.from(User.class);
-        CriteriaQuery<User> all = cq.select(rootEntry);
-        TypedQuery<User> allQuery = em.createQuery(all);
-        return allQuery.getResultList();
+    public List<User> getAllUsers() {
+        return em.createQuery("Select u from User u", User.class).getResultList();
     }
 
     @Override
     @Transactional
-    public User update (User user) {
+    public User update(User user) {
         em.merge(user);
         return user;
     }
 
     @Override
     @Transactional
-    public User delete (User user) {
-        if (em.contains(user)) {
-            em.remove(user);
-        } else {
-            em.remove(em.merge(user));
-        }
+    public User delete(User user) {
+        em.remove(user);
         return user;
     }
 

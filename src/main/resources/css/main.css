@@ -1,0 +1,101 @@
+
+.header {
+    background-color: #343a40;
+    padding-left: 35px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.header .roles {
+    color: #fff;
+    font-size: 16px;
+}
+
+.logout {
+    background: none;
+    border: none;
+    color: #899da0;
+    font-size: 14px;
+}
+
+.header .username {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.left_panel {
+    background-color: #fff;
+    width: 180px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.content {
+background-color: #f8f9fa;
+}
+
+.item {
+background-color: #fff;
+margin-top: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+padding-left: 20px;
+border-radius: 4px;
+color: #007bff;
+font-size: 14px;
+}
+
+.item .active {
+color: #fff;
+background-color: #007bff;
+}
+
+.title {
+color: #212529;
+font-size: 30px;
+font-weight: bold;
+
+}
+
+.label_input {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.admin_panel {
+padding-top: 15px;
+padding-bottom: 15px;
+padding-left: 15px;
+}
+
+.user_title {
+padding-left: 5px;
+padding-bottom: 10px;
+padding-top: 10px;
+}
+
+.tab {
+padding-bottom: 3px;
+padding-top: 10px;
+padding-left: 15px;
+font-weight: bold;
+}
+
+.content_title {
+color: #000;
+font-size: 20px;
+font-weight: bold;
+padding: 20px;
+border: 1px solid #dee2e6;
+}
+
+.white_content {
+padding: 20px;
+border: 1px solid #dee2e6;
+background-color: #fff;
+}
+
+.add_new_user {
+margin-top: 20px;
+}
+
+html,body{height:100%;}

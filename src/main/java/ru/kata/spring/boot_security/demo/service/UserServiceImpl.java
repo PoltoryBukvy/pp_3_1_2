@@ -31,10 +31,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save (User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        ArrayList<Role> roles = new ArrayList<Role>();
-        roles.add(roleDao.getById(1L));
-        user.setRoles(roles);
         return userDao.save(user);
+    }
+
+    @Override
+    public User update(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userDao.update(user);
     }
 
     @Override
@@ -44,8 +47,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> getAll() {
-        return userDao.getAll();
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 
     @Override
@@ -58,5 +61,11 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return userDao.getByEmail(email);
     }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return roleDao.getAllRoles();
+    }
+
 
 }

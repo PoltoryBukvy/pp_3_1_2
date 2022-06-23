@@ -8,20 +8,28 @@ import java.util.List;
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
+    public Role(Long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roles")
     private List< User > users;
 
-    public Integer getId() {
+    public Role() {
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,6 +51,11 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
         return name;
     }
 }

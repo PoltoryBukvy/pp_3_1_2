@@ -1,32 +1,125 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Admin panel</title>
 </head>
 <body>
-<div>
-    <p><a href="/user">add user</a></p>
-    <table bordercolor="black" border="2" width="20%">
-        <thead>
-        <tr>
-            <th> FirstName </th>
-            <th> LastName </th>
-            <th> Email </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-            <td><span th:text="${user.firstName}">  </span></td>
-            <td><span th:text="${user.lastName}">  </span></td>
-            <td><span th:text="${user.email}">  </span></td>
-            <td><a th:href="${'user/' + user.id}"><span>edit</span></a></td>
-            <td><a th:href="${'delete/' + user.id}"><span>delete</span></a></td>
-        </tr>
-        </tbody>
-    </table>
-    <div th:insert="~{footer :: copy}"></div>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="admin_panel">
+        <h3>
+            Admin panel
+        </h3>
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true">Users table</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#form" role="tab" aria-controls="form" aria-selected="false">New User</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+                <div class="content_title">
+                    All users
+                </div>
+                <div class="white_content">
+                    <table class="table-striped table">
+                        <thead>
+                        <tr>
+                            <th> ID</th>
+                            <th> FirstName</th>
+                            <th> LastName</th>
+                            <th> Age</th>
+                            <th> Email</th>
+                            <th> Role</th>
+                            <th> Edit</th>
+                            <th> Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td><span th:text="${user.id}">  </span></td>
+                            <td><span th:text="${user.firstName}">  </span></td>
+                            <td><span th:text="${user.lastName}">  </span></td>
+                            <td><span th:text="${user.age}">  </span></td>
+                            <td><span th:text="${user.email}">  </span></td>
+                            <td><span th:text="${user.getRolesString()}">  </span></td>
+                            <td>
+                                <button th:onclick="'openPopup(' + ${user.id} + ')'" type="button" class="btn btn-info btn_edit">
+                                    Edit
+                                </button>
+                            </td>
+                            <td>
+                                <button th:onclick="'openPopupDelete(' + ${user.id} + ')'" type="button" class="btn btn-danger btn_delete">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenteredLabel">Edit user</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <div class="action_wrap">
+                                    <input type="submit" value="Edit" class="btn btn-primary modal-submit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function openPopup(id) {
+                        var xmlHttp = new XMLHttpRequest();
+                        xmlHttp.open( "GET", "/admin/user/" + id, false );
+                        xmlHttp.send( null );
+                        $('.modal-body').html(xmlHttp.responseText);
+                        $('.modal-submit').attr('form','user-form-' + id);
+                        $('#exampleModalScrollable').modal('toggle');
+                        $('.action_wrap').html('<input type="submit" value="Edit" class="btn btn-primary modal-submit">');
+                        $('.modal-title').text('Edit user');
+                    }
+
+                    function openPopupDelete(id) {
+                        var xmlHttp = new XMLHttpRequest();
+                        xmlHttp.open( "GET", "/admin/user/" + id + "/?delete=true", false );
+                        xmlHttp.send( null );
+                        $('.modal-body').html(xmlHttp.responseText);
+                        $('.modal-submit').attr('form','user-form-' + id);
+                        $('#exampleModalScrollable').modal('toggle');
+                        $('.action_wrap').html('<a style="color: #fff;" href="/admin/user/' + id + '/delete" type="button" class="btn btn-danger">Delete</a>');
+                        $('.modal-title').text('Delete user');
+                    }
+                </script>
+            </div>
+            <div class="tab-pane fade" id="form" role="tabpanel" aria-labelledby="form-tab">
+                <div class="content_title">
+                    Add new user
+                </div>
+                <div class="white_content">
+                    <div th:replace="form.html :: form_user"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 </body>
+
 </html>
+
+

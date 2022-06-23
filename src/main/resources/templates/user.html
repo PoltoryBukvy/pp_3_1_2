@@ -1,17 +1,47 @@
 <!DOCTYPE html>
-
-<html xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+</head>
 <body>
-
-    <div>firstName: <span th:text="${user.firstName}"></span></div>
-    <div>lastName: <span th:text="${user.lastName}"></span></div>
-    <div>email: <span th:text="${user.email}"></span></div>
-
-<div th:insert="~{footer :: copy}"></div>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="admin_panel">
+            <h3>
+                User information-page
+            </h3>
+        </div>
+        <div class="content_title">
+            About user
+        </div>
+        <div class="white_content">
+            <table class="table-striped table">
+                <thead>
+                <tr>
+                    <th> ID</th>
+                    <th> FirstName</th>
+                    <th> LastName</th>
+                    <th> Age</th>
+                    <th> Email</th>
+                    <th> Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span th:text="${user.id}">  </span></td>
+                    <td><span th:text="${user.firstName}">  </span></td>
+                    <td><span th:text="${user.lastName}">  </span></td>
+                    <td><span th:text="${user.age}">  </span></td>
+                    <td><span th:text="${user.email}">  </span></td>
+                    <td><span th:text="${user.getRolesString()}">  </span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 
-<!--
-</body>
-</html>-->
+

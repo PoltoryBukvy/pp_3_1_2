@@ -20,14 +20,12 @@ import ru.kata.spring.boot_security.demo.model.User;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private final UserDao userDao;
     private final SuccessUserHandler successUserHandler;
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDao userDao) {
         this.successUserHandler = successUserHandler;
         this.userDao = userDao;
-
     }
 
     @Override

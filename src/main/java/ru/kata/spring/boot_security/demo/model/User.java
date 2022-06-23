@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +27,9 @@ public class User implements UserDetails {
    @Column(name = "email", unique = true)
    private String email;
 
+   @Column(name = "age")
+   private Integer age;
+
    public void setPassword(String password) {
       this.password = password;
    }
@@ -36,19 +41,28 @@ public class User implements UserDetails {
    @Column(name = "password")
    private String password;
 
+   public List<Role> getRoles() {
+      return roles;
+   }
+
    @ManyToMany(fetch = FetchType.EAGER)
    @JoinTable(
-           name="user_role",
+           name="users_roles",
            joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
            inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
    private List<Role> roles = new ArrayList<>();
 
+   public String getRolesString() {
+      return roles.stream().map(Objects::toString).collect(Collectors.joining(", "));
+   }
+
    public User() {}
    
-   public User(String firstName, String lastName, String email) {
+   public User(String firstName, String lastName, String email, int age) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+      this.age = age;
    }
 
    public Long getId() {
@@ -121,5 +135,13 @@ public class User implements UserDetails {
    @Override
    public String toString() {
       return this.email;
+   }
+
+   public Integer getAge() {
+      return age;
+   }
+
+   public void setAge(Integer age) {
+      this.age = age;
    }
 }
