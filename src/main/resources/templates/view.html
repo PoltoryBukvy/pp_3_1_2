@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" type="image/x-icon" href="data:image/png;base64,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">
+    <link th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+    <link rel="stylesheet" type="text/css" media="all" href="../css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+
+<div class="container-fluid h-100">
+    <div class="row header">
+        <div class="col-md-11">
+            <span class="username" th:text ="${#authentication.getPrincipal().getUsername()}"></span>
+            <span class="roles"> with roles: </span>
+            <span class="text-uppercase roles" th:each="authority : ${#authentication.getAuthorities()}"
+                  th:text="${authority.getAuthority() + ' '}">
+            </span>
+        </div>
+        <div class="col-md-1">
+            <form th:action="@{/logout}" method="post">
+                <input class="logout" type="submit" value="Logout"/>
+            </form>
+        </div>
+    </div>
+    <div class="row h-100">
+        <div class="col-md-2 sidebar-fixed left_panel">
+            <div th:style="${#httpServletRequest.requestURI.contains('admin')} ? 'background-color: #007bff;' : ''" class="item" sec:authorize="hasAuthority('admin')">
+                <a th:style="${#httpServletRequest.requestURI.contains('admin')} ? 'color: #fff;' : ''" href="/admin/" >Admin</a>
+            </div>
+            <div th:style="${#httpServletRequest.requestURI.contains('user')} ? 'background-color: #007bff;' : ''" class="item" sec:authorize="hasAuthority('user')">
+                <a th:style="${#httpServletRequest.requestURI.contains('user')} ? 'color: #fff;' : ''" href="/user/">User</a>
+            </div>
+        </div>
+        <div class="col-md-10" id="content" style="background-color: #f8f9fa;">
+
+            <!--Лист юзеров-->
+            <div class="container" id="admin_panel">
+                <div class="admin_panel">
+                    <h3>
+                        Admin panel
+                    </h3>
+                </div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true">Users table</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#form" role="tab" aria-controls="form" aria-selected="false">New User</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+                        <div class="content_title">
+                            All users
+                        </div>
+                        <div class="white_content">
+                            <table class="table-striped table">
+                                <thead>
+                                <tr>
+                                    <th> ID</th>
+                                    <th> FirstName</th>
+                                    <th> LastName</th>
+                                    <th> Age</th>
+                                    <th> Email</th>
+                                    <th> Role</th>
+                                    <th> Edit</th>
+                                    <th> Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody id="users_table">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="form" role="tabpanel" aria-labelledby="form-tab">
+                        <div class="content_title">
+                            Add new user
+                        </div>
+                        <div class="white_content">
+                            <div>
+                                <form id="user-form-create" class="center-block">
+
+                                    <div class="mx-auto text-center" style="width: 400px;">
+
+                                        <label class="label_input" for="inputFirstName">First name</label>
+                                        <input type="text" placeholder="First name" class="form-control" id="inputFirstName" name="firstName" value="">
+
+                                        <label class="label_input" for="inputLastName">Last name</label>
+                                        <input type="text" placeholder="Last name" class="form-control" id="inputLastName" name="lastName" value="">
+
+                                        <label class="label_input" for="inputAge">Age</label>
+                                        <input type="number" placeholder="Age" class="form-control" id="InputAge" name="age" value="">
+
+                                        <label class="label_input" for="inputEmail">Email</label>
+                                        <input type="email" placeholder="Email" class="form-control" id="inputEmail" name="email" value="">
+
+                                        <label class="label_input" for="inputPassword">Password</label>
+                                        <input type="password" placeholder="Password" class="form-control" id="inputPassword" name="password" value="">
+
+                                        <label class="label_input">Role</label>
+                                        <select name="roless" class="custom-select" multiple="" size="2">
+                                            <option value="2">admin</option>
+                                            <option value="1">user</option>
+                                        </select>
+
+                                        <p onclick="createUser();" class="btn btn-success add_new_user">Add new user</p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Модальное окно формы-->
+<div class="modal" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenteredLabel">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal_content">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="action_wrap">
+                    <input type="submit" value="Edit" class="btn btn-primary modal-submit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.11.1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script>
+    window.onload = function() {
+        fillingUsersTable();
+    }
+</script>
+</body>
+</html>

@@ -88,9 +88,8 @@
                         xmlHttp.open( "GET", "/admin/user/" + id, false );
                         xmlHttp.send( null );
                         $('.modal-body').html(xmlHttp.responseText);
-                        $('.modal-submit').attr('form','user-form-' + id);
                         $('#exampleModalScrollable').modal('toggle');
-                        $('.action_wrap').html('<input type="submit" value="Edit" class="btn btn-primary modal-submit">');
+                        $('.action_wrap').html('<input type="submit" form="user-form-'+id+'" value="Edit" class="btn btn-primary modal-submit">');
                         $('.modal-title').text('Edit user');
                     }
 

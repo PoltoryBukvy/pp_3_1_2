@@ -23,13 +23,18 @@ public class AdminController {
 		this.userService = userService;
 	}
 
-	@GetMapping
+	@GetMapping("/list")
 	public String list(Model model) {
 		List<User> users = userService.getAllUsers();
 		model.addAttribute("users", users);
 		model.addAttribute("user", new User());
 		model.addAttribute("allRoles", userService.getAllRoles());
 		return "list";
+	}
+
+	@GetMapping
+	public String restapi() {
+		return "view";
 	}
 
 	@GetMapping("/user")

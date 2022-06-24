@@ -15,7 +15,7 @@ public interface UserService {
 
     public List<User> getAllUsers();
 
-    public void delete(User user);
+    public User delete(User user);
 
     public User getByEmail(String email);
 
