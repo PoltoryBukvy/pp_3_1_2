@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
-    public User save (User user) {
+    public User save(User user) {
         em.persist(user);
         return user;
     }
@@ -33,14 +33,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
-    public User update (User user) {
+    public User update(User user) {
         em.merge(user);
         return user;
     }
 
     @Override
     @Transactional
-    public User delete (User user) {
+    public User delete(User user) {
         em.remove(user);
         return user;
     }

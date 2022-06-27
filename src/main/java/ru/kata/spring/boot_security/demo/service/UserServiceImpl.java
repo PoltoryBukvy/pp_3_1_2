@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save (User user) {
+    public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.save(user);
     }
@@ -64,25 +64,25 @@ public class UserServiceImpl implements UserService {
     @PostConstruct
     public void init() {
         Role userRole = roleDao.getByName("user");
-        if(userRole == null) {
+        if (userRole == null) {
             userRole = new Role("user");
             roleDao.save(userRole);
         }
 
         Role adminRole = roleDao.getByName("admin");
-        if(adminRole == null) {
+        if (adminRole == null) {
             adminRole = new Role("admin");
             roleDao.save(adminRole);
         }
 
-        if(userDao.getByEmail("admin@mail.ru") == null) {
+        if (userDao.getByEmail("admin@mail.ru") == null) {
             User admin = new User("admin", "admin", "admin@mail.ru");
             admin.setPassword(passwordEncoder.encode("1111"));
             admin.setRoles(List.of(userRole, adminRole));
             userDao.save(admin);
         }
 
-        if(userDao.getByEmail("user@mail.ru") == null) {
+        if (userDao.getByEmail("user@mail.ru") == null) {
             User user = new User("user", "user", "user@mail.ru");
             user.setPassword(passwordEncoder.encode("2222"));
             user.setRoles(List.of(userRole));
