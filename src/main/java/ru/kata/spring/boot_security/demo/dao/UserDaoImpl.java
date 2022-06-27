@@ -5,10 +5,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -52,7 +48,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getByEmail(String email) {
         return em.createQuery("SELECT u from User u WHERE u.email = :email", User.class)
-                .setParameter("email", email).getSingleResult();
+                .setParameter("email", email).getResultList().stream()
+                .findFirst()
+                .orElse(null);
     }
 
 }
