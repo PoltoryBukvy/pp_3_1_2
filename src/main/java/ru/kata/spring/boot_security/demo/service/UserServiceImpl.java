@@ -7,9 +7,11 @@ import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,9 +37,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User save(User user, Optional<String[]> roless) {
+        if (roless.isPresent()) {
+            List<Role> roles = new ArrayList<>();
+            for (String roleId : roless.get()) {
+                roles.add(new Role(Long.parseLong(roleId)));
+            }
+            user.setRoles(roles);
+        }
+        return save(user);
+    }
+
+    @Override
     public User update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.update(user);
+    }
+
+    @Override
+    public User update(User user, Optional<String[]> roless) {
+        if (roless.isPresent()) {
+            List<Role> roles = new ArrayList<>();
+            for (String roleId : roless.get()) {
+                roles.add(new Role(Long.parseLong(roleId)));
+            }
+            user.setRoles(roles);
+        }
+        return update(user);
     }
 
     @Override
@@ -67,5 +93,34 @@ public class UserServiceImpl implements UserService {
         return roleDao.getAllRoles();
     }
 
+    @PostConstruct
+    public void init() {
+        Role userRole = roleDao.getByName("user");
+        if (userRole == null) {
+            userRole = new Role("user");
+            roleDao.save(userRole);
+        }
+
+        Role adminRole = roleDao.getByName("admin");
+        if (adminRole == null) {
+            adminRole = new Role("admin");
+            roleDao.save(adminRole);
+        }
+
+        if (userDao.getByEmail("admin@mail.ru") == null) {
+            User admin = new User("admin", "admin", "admin@mail.ru");
+            admin.setPassword(passwordEncoder.encode("1111"));
+            admin.setRoles(List.of(userRole, adminRole));
+            userDao.save(admin);
+        }
+
+        if (userDao.getByEmail("user@mail.ru") == null) {
+            User user = new User("user", "user", "user@mail.ru");
+            user.setPassword(passwordEncoder.encode("2222"));
+            user.setRoles(List.of(userRole));
+            userDao.save(user);
+        }
+
+    }
 
 }

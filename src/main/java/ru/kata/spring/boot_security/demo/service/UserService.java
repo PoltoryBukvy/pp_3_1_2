@@ -8,8 +8,10 @@ import java.util.Optional;
 
 public interface UserService {
     public User save(User user);
+    public User save(User user,  Optional<String[]> roles);
 
     public User update(User user);
+    public User update(User user,Optional<String[]> roles);
 
     public User find(long id);
 
@@ -20,5 +22,7 @@ public interface UserService {
     public User getByEmail(String email);
 
     public List<Role> getAllRoles();
+
+
 
 }

@@ -1,15 +1,11 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,13 +41,8 @@ public class AdminController {
 	}
 
 	@PostMapping("/user")
-	public String save(@ModelAttribute User user, Model model, @RequestParam("roless") String[] roless) {
-		List<Role> roles = new ArrayList<>();
-		for (String roleId : roless) {
-			roles.add(new Role(Long.parseLong(roleId)));
-		}
-		user.setRoles(roles);
-		model.addAttribute("user", userService.save(user));
+	public String save(@ModelAttribute User user, Model model, @RequestParam("roless") Optional<String[]> roless) {
+		model.addAttribute("user", userService.save(user, roless));
 		return "redirect:";
 	}
 
@@ -69,14 +60,7 @@ public class AdminController {
 
 	@PostMapping("/user/{id}")
 	public String edit(@ModelAttribute User user, Model model, @RequestParam("roless") Optional<String[]> roless) {
-		List<Role> roles = new ArrayList<>();
-		if (roless.isPresent()) {
-			for (String roleId : roless.get()) {
-				roles.add(new Role(Long.parseLong(roleId)));
-			}
-		}
-		user.setRoles(roles);
-		model.addAttribute("user", userService.update(user));
+		model.addAttribute("user", userService.update(user, roless));
 		return "redirect:/admin/";
 	}
 

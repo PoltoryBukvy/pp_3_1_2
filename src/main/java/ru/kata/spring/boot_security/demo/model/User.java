@@ -30,7 +30,13 @@ public class User implements UserDetails {
    @Column(name = "age")
    private Integer age;
 
-   public void setPassword(String password) {
+    public User(String firstName, String lastName, String email) {
+       this.firstName = firstName;
+       this.lastName = lastName;
+       this.email = email;
+    }
+
+    public void setPassword(String password) {
       this.password = password;
    }
 
